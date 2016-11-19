@@ -4,6 +4,7 @@
 import random
 import numpy as np
 
+
 class Sampling():
 
     def __init__(self, game, dist, policy, gamma):
