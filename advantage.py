@@ -4,7 +4,7 @@ First, sampling a set of states and its action,
 Second, estimate q-value of the state-action pair.
 Third, use estimated q-value to get a new policy.
 Last, calculate the advatange between new policy and old policy
-adn return the new policy and the advantage.
+and return the new policy and the advantage.
 """
 
 import numpy as np
