@@ -26,17 +26,28 @@ class AdvantageEstimator():
         """
         return np.random.random(actions, 1)
 
-    def estimatQValue(self, state, action):
+    def estimatQValue(self, policy, state, action, horizon = 30):
         """
         Return a q-value
-        Estimate q-value from roll out and reward of next state (state + action)
+        Estimate q-value from a single roll out and reward of next state (state + action)
         """
-        pass
+        nextState = self.game.getNextStateWithAction(state, action)
+        reward = self.game.getReward(state, action, nextState)
+        state = nextState
+        for i in range(horizon - 1):
+            if (self.game.isTerminal(state)):
+                break
+            action = policy.getAction(state)
+            nextState = self.game.getNextStateWithAction(state, action)
+            reward += self.discount * self.game.getReward(state, action, nextState)
+            state = nextState
+
+        return reward * (1 - self.discount)
 
     def getSampledStateActionQ(self, policy, stateNum, cutOff):
         """
         Return a {s, a, q} set with size #stateNum
-        Sample #stateNum triplets {state, action, q-value}
+        Sample #stateNum triplets (state, action, q-value)
         """
         stateActionQList = []
         samplingHandler = sampling.SamplingHandler(self.game, self.dist, policy, self.gamma)
@@ -44,7 +55,7 @@ class AdvantageEstimator():
         for state in sampledStates:
             actions = self.game.getPossibleActions(state)
             action = self.getRandomAction(actions)
-            qValue = self.estimateQValue(state, action)
+            qValue = self.estimateQValue(policy, state, action)
             stateActionQList.append((state, action, qValue))
 
         return stateActionQList
