@@ -1,32 +1,66 @@
 """
+Estimate advantage.
+First, sampling a set of states and its action, 
+Second, estimate q-value of the state-action pair.
+Third, use estimated q-value to get a new policy.
+Last, calculate the advatange between new policy and old policy
+adn return the new policy and the advantage.
 """
 
-import random
 import numpy as np
 import sampling
 
+
 class AdvantageEstimator():
 
-    def __init__(self, game, dist, policy, gamma):
+    def __init__(self, game, dist, discount, gamma):
         self.game = game
         self.dist = dist
-        self.policy = policy
+        self.discount = discount
         self.gamma = gamma
-        self.Sampling = Sampling(game, dist, policy, gamma)
 
     def getRandomAction(self, actions):
     	"""
-    	Uniformly get a random action
-    	"""
-    	return np.random.random(actions, 1)
+        Return an action
+        Uniformly get a random action
+        """
+        return np.random.random(actions, 1)
 
-    def estimatQvalue(self, stateNum, cutOff):
-    	sampledStates = self.Sampling.sampledStates(stateNum, cutOff)
+    def estimatQValue(self, state, action):
+        """
+        Return a q-value
+        Estimate q-value from roll out and reward of next state (state + action)
+        """
+        pass
+
+    def getSampledStateActionQ(self, policy, stateNum, cutOff):
+        """
+        Return a {s, a, q} set with size #stateNum
+        Sample #stateNum triplets {state, action, q-value}
+        """
+        stateActionQList = []
+        samplingHandler = sampling.SamplingHandler(self.game, self.dist, policy, self.gamma)
+        sampledStates = samplingHandler.sampledStates(stateNum, cutOff)
         for state in sampledStates:
-        	actions = self.game.getLegalActions(state)
-        	action = self.getRandomAction(actions)
+            actions = self.game.getPossibleActions(state)
+            action = self.getRandomAction(actions)
+            qValue = self.estimateQValue(state, action)
+            stateActionQList.append((state, action, qValue))
 
-    def estimateAdvantage(self, stateNum, cutOff):
-    	estimatedQvalue = self.estimateQvalue(stateNum, cutOff)
-        
-            
+    def estimateAdvantage(self, policy, stateNum, cutOff):
+        """
+        Return a new policy and it's advantage
+        Sample #stateNum states, get an action randomly for each state
+        Calculate sampled q-value, then get a new policy
+        Last, estimate the advantage
+        """
+        sampledSet = self.getSampledStateActionQ(policy, stateNum, cutOff)
+        newPolicy = [] # getNewPolicy(sampledSet)
+        advantage = 0.0
+        for sample in sampledSet:
+            numOfActions = len(self.game.getPossibleActions(sample[0]))
+            actionProbDiff = newPolicy.getProb(sample[0], sample[1]) - policy.getProb(sample[0], sample[1])
+            advantage += numOfActions * sample[2] * actionProbDiff
+        return {'newPolicy': newPolicy, 'advantage': (advantage / stateNum)}
+
+
