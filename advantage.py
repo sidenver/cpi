@@ -47,6 +47,8 @@ class AdvantageEstimator():
             qValue = self.estimateQValue(state, action)
             stateActionQList.append((state, action, qValue))
 
+        return stateActionQList
+
     def estimateAdvantage(self, policy, stateNum, cutOff):
         """
         Return a new policy and it's advantage
@@ -55,12 +57,11 @@ class AdvantageEstimator():
         Last, estimate the advantage
         """
         sampledSet = self.getSampledStateActionQ(policy, stateNum, cutOff)
-        newPolicy = [] # getNewPolicy(sampledSet)
+        newPolicy = []  # getNewPolicy(sampledSet)
         advantage = 0.0
         for sample in sampledSet:
             numOfActions = len(self.game.getPossibleActions(sample[0]))
             actionProbDiff = newPolicy.getProb(sample[0], sample[1]) - policy.getProb(sample[0], sample[1])
             advantage += numOfActions * sample[2] * actionProbDiff
+
         return {'newPolicy': newPolicy, 'advantage': (advantage / stateNum)}
-
-

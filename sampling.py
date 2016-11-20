@@ -44,6 +44,7 @@ class SamplingHandler():
             currState = self.game.getNextStateWithAction(currState, self.policy[currState])
             if self.acceptState():
                 return currState
+
         return currState
 
     def sampleStates(self, stateNum, cutOff):
