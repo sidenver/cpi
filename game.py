@@ -1,16 +1,19 @@
-
-
+import gym
+env = gym.make('MountainCar-v0')
 class game(object):
 
     def __init__(self, name=None):
         pass
 
     def getNextStateWithAction(self, state, action):
-        pass
+        action = getPossibleActions(self.state)
+        self.state, reward, done, info = env._step(action)
+        return self.state
 
     def getPossibleActions(self, state):
-        pass
-
+        self.action = env.action_space.sample()
+        return self.action
+        
     def getRestartState(self):
         pass
 
