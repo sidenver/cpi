@@ -1,3 +1,4 @@
+from basePolicy import BasePolicy
 
 
 class GreedyPolicy(object):
@@ -5,4 +6,6 @@ class GreedyPolicy(object):
         pass
 
     def getGreedyPolicy(self, stateActionQList):
-        pass
+        greedyPolicy = BasePolicy()
+        # do some ML and update
+        return greedyPolicy
