@@ -72,7 +72,7 @@ class AdvantageEstimator():
         advantage = 0.0
         for sample in sampledSet:
             numOfActions = len(self.game.getPossibleActions(sample[0]))
-            actionProbDiff = newPolicy.getProb(sample[0], sample[1]) - policy.getProb(sample[0], sample[1])
+            actionProbDiff = newPolicy.getActionsWithProb(sample[0])[sample[1]] - policy.ggetActionsWithProb(sample[0])[sample[1]]
             advantage += numOfActions * sample[2] * actionProbDiff
 
         return {'newPolicy': newPolicy, 'advantage': (advantage / stateNum)}
