@@ -22,3 +22,4 @@ class game(object):
 
     def isTerminal(self, state):
         pass
+        
