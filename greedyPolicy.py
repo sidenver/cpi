@@ -1,8 +1,11 @@
+from basePolicy import BasePolicy
 
 
 class GreedyPolicy(object):
-    def __init__(self):
-        pass
+    def __init__(self, game):
+        self.game = game
 
     def getGreedyPolicy(self, stateActionQList):
-        pass
+        greedyPolicy = BasePolicy(self.game)
+        # do some ML and update
+        return greedyPolicy
