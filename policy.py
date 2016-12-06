@@ -13,17 +13,21 @@ class Policy(object):
 
     def getActionsWithProb(self, state):
         # {action: prob}
-        actionList = self.game.getPossibleActions(state)
-        return {action: sum([self.policy[basePolicy] if basePolicy.getAction(state) == action else 0.0 for basePolicy in self.policy]) for action in actionList}
+        actionProbDict = Counter()
+        for basePolicy in self.policy:
+            predictedAction = basePolicy.getAction(state)
+            actionProbDict[predictedAction] += self.policy[basePolicy]
+
+        return actionProbDict
 
     def normalizePolicyWeight(self):
         total = sum(self.policy.values(), 0.0)
         for key in self.policy:
             self.policy[key] /= total
 
-    def conservativeUpdate(self,  newPolicy, alpha=1.0):
+    def conservativeUpdate(self, newPolicy, alpha=1.0):
         if alpha == 1.0:
             self.policy[newPolicy] = 1.0
         else:
-            self.policy[newPolicy] = alpha/(1-alpha)
+            self.policy[newPolicy] = alpha / (1 - alpha)
             self.normalizePolicyWeight()
