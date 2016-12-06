@@ -26,7 +26,7 @@ class AdvantageEstimator():
         """
         return np.random.random(actions, 1)
 
-    def estimatQValue(self, policy, state, action, horizon = 30):
+    def estimatQValue(self, policy, state, action, horizon=30):
         """
         Return a q-value
         Estimate q-value from a single roll out and reward of next state (state + action)
