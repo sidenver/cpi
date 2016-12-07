@@ -13,11 +13,10 @@ import sampling
 
 class AdvantageEstimator():
 
-    def __init__(self, game, dist, discount, gamma):
+    def __init__(self, game, dist, discount):
         self.game = game
         self.dist = dist
         self.discount = discount
-        self.gamma = gamma
 
     def getRandomAction(self, actions):
     	"""
@@ -50,7 +49,7 @@ class AdvantageEstimator():
         Sample #stateNum triplets (state, action, q-value)
         """
         stateActionQList = []
-        samplingHandler = sampling.SamplingHandler(self.game, self.dist, policy, self.gamma)
+        samplingHandler = sampling.SamplingHandler(self.game, self.dist, policy, self.discount)
         sampledStates = samplingHandler.sampledStates(stateNum, cutOff)
         for state in sampledStates:
             actions = self.game.getPossibleActions(state)
