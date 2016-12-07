@@ -1,3 +1,4 @@
+from collections import Counter
 
 
 class BasePolicy(object):
@@ -15,3 +16,9 @@ class BasePolicy(object):
             return max(possibleActionList, key=lambda x: actionScores[x])
         else:
             return None
+
+    def getActionsWithProb(self, state):
+        bestAction = self.getAction(state)
+        actionProbDict = Counter()
+        actionProbDict[bestAction] = 1.0
+        return actionProbDict
