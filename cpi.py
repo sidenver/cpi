@@ -16,7 +16,11 @@ if __name__ == '__main__':
     # TODO initalize policy
     policy = Policy(env)  # initalized here
     advantageEstimator = AdvantageEstimator(env, dist, discount)
-    for k in range(iteration):
+    k = 0
+    while k < iteration:
         estimate = advantageEstimator.estimateAdvantage(greedyChooser, policy, sampleSize, horizon)
         alpha = (estimate['advantage'] - (accuracy / 3.)) * (1 - discount) / 4.
         policy.conservativeUpdate(estimate['newPolicy'], alpha)
+        k = k + 1
+        if estimate['advantage'] < (accuracy * 2. / 3.):
+            break
