@@ -79,8 +79,7 @@ class LongGrid(Env):
         return state.isTerminal()
 
     def state2feature(self, state):
-        feature = list()
-        feature.append(state.getIndex())
+        feature = [1.0 if (i == state.getIndex()) else 0.0 for i in range(self.width)]
         return feature
 
     def action2feature(self, action):
