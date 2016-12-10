@@ -50,7 +50,7 @@ class AdvantageEstimator():
         """
         stateActionQList = []
         samplingHandler = sampling.SamplingHandler(self.game, self.dist, policy, self.discount)
-        sampledStates = samplingHandler.sampledStates(stateNum, cutOff)
+        sampledStates = samplingHandler.sampleStates(stateNum, cutOff)
         for state in sampledStates:
             actions = self.game.getPossibleActions(state)
             action = self.getRandomAction(actions)

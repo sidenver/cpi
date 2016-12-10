@@ -1,10 +1,11 @@
-from game import game
+# from game import game
 from greedyPolicy import GreedyPolicy
 from advantage import AdvantageEstimator
 from policy import Policy
+from longGrid import LongGrid
 
 if __name__ == '__main__':
-    env = game()
+    env = LongGrid(10, 100)
     dist = 0  # restart distribution
     discount = 0.5  # discount factor
     iteration = 1000  # number of iteration of learning
@@ -22,5 +23,6 @@ if __name__ == '__main__':
         alpha = (estimate['advantage'] - (accuracy / 3.)) * (1 - discount) / 4.
         policy.conservativeUpdate(estimate['newPolicy'], alpha)
         k = k + 1
+        print('Iteration %d: advantage %f' %{k, estimate['advantage.']})
         if estimate['advantage'] < (accuracy * 2. / 3.):
             break

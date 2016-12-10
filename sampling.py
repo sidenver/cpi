@@ -31,7 +31,8 @@ class SamplingHandler():
         #     if r <= 0:
         #         return state
         # assert False, "No start state"
-        return np.random.choice(self.dict.key(), 1, self.dict.value())
+        return self.game.getRestartState()
+        return np.random.choice(self.dist.key(), 1, self.dist.value())
 
     def getSampledState(self, startState, cutOff):
         """
