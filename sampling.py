@@ -44,8 +44,11 @@ class SamplingHandler():
         while iteration <= cutOff:
             action = self.policy.getAction(currState)
             currState = self.game.getNextStateWithAction(currState, self.policy.getAction(currState))
-            if self.acceptState() or currState.isTerminal():
+            if currState.isTerminal():
+                currState = startState
+            elif self.acceptState():
                 return currState
+            iteration = iteration + 1
 
         return currState
 
