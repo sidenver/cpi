@@ -14,10 +14,10 @@ class Policy(object):
         if len(actionList) == 0:
             return None
         actionProbDict = self.getActionsWithProb(state)
-        action = np.random.choice(actionList, 1, p=[actionProbDict[action] for action in actionList])[0]
+        # action = np.random.choice(actionList, 1, p=[actionProbDict[action] for action in actionList])[0]
 
-        return action
-        # return max(actionList, key=lambda x: actionProbDict[x])
+        # return action
+        return max(actionList, key=lambda x: actionProbDict[x])
 
     def getActionsWithProb(self, state):
         # {action: prob}
@@ -29,7 +29,7 @@ class Policy(object):
             predictedAction = basePolicy.getAction(state)
             if predictedAction in actionList:
                 actionProbDict[predictedAction] += self.policy[basePolicy]
-        self.normalizeProb(actionProbDict)
+        # self.normalizeProb(actionProbDict)
         return actionProbDict
 
     def normalizeProb(self, actionProbDict):
@@ -47,5 +47,6 @@ class Policy(object):
         self.policy[initialPolicy] = 1
 
     def conservativeUpdate(self, newPolicy, alpha=1.0):
-        self.policy[newPolicy] = alpha / (1 - alpha)
-        self.normalizePolicyWeight()
+        if alpha > 0:
+            self.policy[newPolicy] = alpha / (1 - alpha)
+            self.normalizePolicyWeight()
