@@ -23,7 +23,7 @@ class AdvantageEstimator():
         Return an action
         Uniformly get a random action
         """
-        return np.random.choice(actions, 1)
+        return np.random.choice(actions, 1)[0]
 
     def estimateQValue(self, policy, state, action, horizon=30):
         """
