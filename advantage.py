@@ -33,13 +33,15 @@ class AdvantageEstimator():
         nextState = self.game.getNextStateWithAction(state, action)
         reward = self.game.getReward(state, action, nextState)
         state = nextState
+        discountFactor = self.discount
         for i in range(horizon - 1):
             if (self.game.isTerminal(state)):
                 break
             action = policy.getAction(state)
             nextState = self.game.getNextStateWithAction(state, action)
-            reward += self.discount * self.game.getReward(state, action, nextState)
+            reward += discountFactor * self.game.getReward(state, action, nextState)
             state = nextState
+            discountFactor = discountFactor * self.discount
 
         return reward * (1 - self.discount)
 
