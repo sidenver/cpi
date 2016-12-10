@@ -5,7 +5,7 @@ from policy import Policy
 from longGrid import LongGrid
 
 if __name__ == '__main__':
-    env = LongGrid(10, 100, 0.1)
+    env = LongGrid(30, 100, 0.1)
     dist = 0  # restart distribution
     discount = 0.9  # discount factor
     iteration = 1000  # number of iteration of learning

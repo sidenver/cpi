@@ -18,7 +18,7 @@ class SamplingHandler():
         Return true if the state is accepted
         With prob. self.gamma return true
         """
-        return np.random.random() < self.gamma
+        return np.random.random() > self.gamma
 
     def getStartState(self):
         """
