@@ -22,9 +22,11 @@ class State(object):
 
 class LongGrid(Env):
 
-    def __init__(self, width, reward):
+    def __init__(self, width, reward, noise):
         self.stateList = list()
         self.width = width
+        self.noise = noise
+        self.resultType = {'correct': (1 - self.noise), 'stay': self.noise / 2., 'reverse': self.noise / 2.}
         for i in range(width - 1):
             state = State(i, 0)
             self.stateList.append(state)
@@ -37,6 +39,14 @@ class LongGrid(Env):
         Return next state
         """
         index = state.getIndex()
+        invokeResult = np.random.choice(self.resultType.key(), 1, self.resultType.value())[0]
+        if invokeResult == 'reverse':
+            if action == 'left':
+                action = 'right'
+            else:
+                action = 'left'
+        elif invokeResult == 'stay':
+            action = 'stay'
         if action == 'left':
             index = index - 1
         elif action == 'right':
@@ -50,9 +60,7 @@ class LongGrid(Env):
         Return a list of legal action
         """
         actions = list()
-        if state.getIndex == 1: # start state
-            actions.append('right')
-        elif not state.isTerminal(): # not terminal state
+        if not state.isTerminal(): # not terminal state
             actions.append('left')
             actions.append('right')
         return actions

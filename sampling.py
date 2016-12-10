@@ -25,14 +25,8 @@ class SamplingHandler():
         Return a state
         Get a start state from self.dist
         """
-        # r = np.random.random()
-        # for state, prob in self.dist:
-        #     r -= prob
-        #     if r <= 0:
-        #         return state
-        # assert False, "No start state"
         return self.game.getRestartState()
-        return np.random.choice(self.dist.key(), 1, self.dist.value())
+        # return np.random.choice(self.dist.key(), 1, self.dist.value())
 
     def getSampledState(self, startState, cutOff):
         """
