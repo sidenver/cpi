@@ -7,6 +7,9 @@ class State(object):
         self.reward = reward
         self.isTerminal = isTerminal
 
+    def __str__(self):
+        print(self.index)
+
     def isTerminal(self):
         return self.isTerminal
 
@@ -21,11 +24,12 @@ class LongGrid(Env):
 
     def __init__(self, width, reward):
         self.stateList = list()
+        self.width = width
         for i in range(width - 1):
-            state = State(i , 0)
+            state = State(i, 0)
             self.stateList.append(state)
         # Terminal state
-        self.stateList.append(State(width, reward, True))
+        self.stateList.append(State(width - 1, reward, True))
 
     def getNextStateWithAction(self, state, action):
         index = state.getIndex()
@@ -33,7 +37,7 @@ class LongGrid(Env):
             index = index - 1
         elif action == 'right':
             index = index + 1 
-        if index < 1 or index > self.width:
+        if index < 0 or index >= self.width:
             index = state.getIndex()
         return self.stateList[index]
 
@@ -41,13 +45,13 @@ class LongGrid(Env):
         actions = list()
         if state.getIndex == 1: # start state
             actions.append('right')
-        elif not state.isTerminal: # not terminal state
+        elif not state.isTerminal(): # not terminal state
             actions.append('left')
             actions.append('right')
         return actions
 
     def getRestartState(self):
-        index = np.random.random_integers(self.width)
+        index = np.random.randint(self.width)
         return self.stateList[index]
 
     def getReward(self, state, action, nextState):
