@@ -23,6 +23,6 @@ if __name__ == '__main__':
         alpha = (estimate['advantage'] - (accuracy / 3.)) * (1 - discount) / 4.
         policy.conservativeUpdate(estimate['newPolicy'], alpha)
         k = k + 1
-        print('Iteration %d: advantage %f' %{k, estimate['advantage.']})
+        print('Iteration {}: advantage {}'.format(str(k), str(estimate['advantage'])))
         if estimate['advantage'] < (accuracy * 2. / 3.):
             break
