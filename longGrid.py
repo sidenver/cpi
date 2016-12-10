@@ -8,7 +8,7 @@ class State(object):
         self._isTerminal = isTerminal
 
     def __str__(self):
-        print(self._index)
+        return self.index
 
     def isTerminal(self):
         return self._isTerminal
