@@ -11,7 +11,7 @@ if __name__ == '__main__':
     iteration = 1000  # number of iteration of learning
     # TODO accuracy?
     accuracy = 0.9  # accuracy
-    sampleSize = 100  # number of sample's states
+    sampleSize = 500  # number of sample's states
     horizon = 1000  # finite horizon
     greedyChooser = GreedyPolicy(env)
     # TODO initalize policy
@@ -24,5 +24,5 @@ if __name__ == '__main__':
         policy.conservativeUpdate(estimate['newPolicy'], alpha)
         k = k + 1
         print('Iteration {}: advantage {}'.format(str(k), str(estimate['advantage'])))
-        if estimate['advantage'] < (accuracy * 2. / 3.):
-            break
+        # if estimate['advantage'] < (accuracy * 2. / 3.):
+            # break
