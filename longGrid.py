@@ -3,21 +3,21 @@ from env import Env
 
 class State(object):
     def __init__(self, index, reward, isTerminal = False):
-        self.index = index
-        self.reward = reward
-        self.isTerminal = isTerminal
+        self._index = index
+        self._reward = reward
+        self._isTerminal = isTerminal
 
     def __str__(self):
-        print(self.index)
+        print(self._index)
 
     def isTerminal(self):
-        return self.isTerminal
+        return self._isTerminal
 
     def getReward(self):
-        return self.reward
+        return self._reward
 
     def getIndex(self):
-        return self.index
+        return self._index
 
 
 class LongGrid(Env):
