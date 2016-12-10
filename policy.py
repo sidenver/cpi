@@ -1,6 +1,6 @@
 from collections import Counter
 from sklearn import svm
-from basePolicy import BasePolicy
+from initalPolicy import InitalPolicy
 
 
 class Policy(object):
@@ -31,17 +31,18 @@ class Policy(object):
             self.policy[key] /= total
 
     def initalizedPolicy(self):
-        X = []
-        Y = [0, 1, 0, 1, 0, 1, 1, 0, 0, 1]
-        for x in range(10):
-            state = self.game.getRestartState()
-            action = self.game.getPossibleActions(state)[0]
-            stateFeature = self.game.state2feature(state)
-            actionFeature = self.game.action2feature(action)
-            X.append(stateFeature+actionFeature)
-        lin_clf = svm.LinearSVC()
-        lin_clf.fit(X, Y)
-        initialPolicy = BasePolicy(lin_clf, self.game)
+        # X = []
+        # Y = [0, 1, 0, 1, 0, 1, 1, 0, 0, 1]
+        # for x in range(10):
+        #     state = self.game.getRestartState()
+        #     action = self.game.getPossibleActions(state)[0]
+        #     stateFeature = self.game.state2feature(state)
+        #     actionFeature = self.game.action2feature(action)
+        #     X.append(stateFeature+actionFeature)
+        # lin_clf = svm.LinearSVC()
+        # lin_clf.fit(X, Y)
+        # initialPolicy = BasePolicy(lin_clf, self.game)
+        initialPolicy = InitalPolicy(self.game)
         self.policy[initialPolicy] = 1
 
     def conservativeUpdate(self, newPolicy, alpha=1.0):
