@@ -7,7 +7,7 @@ from longGrid import LongGrid
 if __name__ == '__main__':
     env = LongGrid(10, 100)
     dist = 0  # restart distribution
-    discount = 0.5  # discount factor
+    discount = 0.9  # discount factor
     iteration = 1000  # number of iteration of learning
     # TODO accuracy?
     accuracy = 0.9  # accuracy

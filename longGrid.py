@@ -32,6 +32,10 @@ class LongGrid(Env):
         self.stateList.append(State(width - 1, reward, True))
 
     def getNextStateWithAction(self, state, action):
+        """
+        Input current state and action
+        Return next state
+        """
         index = state.getIndex()
         if action == 'left':
             index = index - 1
@@ -42,6 +46,9 @@ class LongGrid(Env):
         return self.stateList[index]
 
     def getPossibleActions(self, state):
+        """
+        Return a list of legal action
+        """
         actions = list()
         if state.getIndex == 1: # start state
             actions.append('right')
@@ -51,7 +58,10 @@ class LongGrid(Env):
         return actions
 
     def getRestartState(self):
-        index = np.random.randint(self.width)
+        """
+        Exclude terminal state
+        """
+        index = np.random.randint(self.width - 1)
         return self.stateList[index]
 
     def getReward(self, state, action, nextState):
