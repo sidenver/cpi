@@ -60,6 +60,6 @@ class SamplingHandler():
             startState = self.getStartState()
             sampledState = self.getSampledState(startState, cutOff)
             sampledStates.append(sampledState)
-            print(sampledState)
+            # print(sampledState)
 
         return sampledStates
