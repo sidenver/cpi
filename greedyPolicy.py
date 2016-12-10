@@ -10,7 +10,7 @@ class GreedyPolicy(object):
     def getGreedyPolicy(self, stateActionQList):
         stateToActionQList = defaultdict(list)
         for state, action, estimateQ in stateActionQList:
-            stateToActionQList[state].append(action, estimateQ)
+            stateToActionQList[state].append((action, estimateQ))
         X = []
         Y = []
         for state in stateToActionQList:
@@ -19,11 +19,11 @@ class GreedyPolicy(object):
                 stateFeature = self.game.state2feature(state)
                 actionFeature = self.game.action2feature(action)
                 feature = stateFeature + actionFeature
-                X.append[feature]
+                X.append(feature)
                 if action == maxActionQ[0]:
-                    Y.append[1]
+                    Y.append(1)
                 else:
-                    Y.append[0]
+                    Y.append(0)
         lin_clf = svm.LinearSVC()
         lin_clf.fit(X, Y)
         greedyPolicy = BasePolicy(lin_clf, self.game)
