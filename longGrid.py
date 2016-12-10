@@ -39,7 +39,7 @@ class LongGrid(Env):
         Return next state
         """
         index = state.getIndex()
-        invokeResult = np.random.choice(self.resultType.key(), 1, self.resultType.value())[0]
+        invokeResult = np.random.choice(self.resultType.keys(), 1, self.resultType.values())[0]
         if invokeResult == 'reverse':
             if action == 'left':
                 action = 'right'
