@@ -1,6 +1,6 @@
 from collections import Counter
-from sklearn import svm
 from initalPolicy import InitalPolicy
+import numpy as np
 
 
 class Policy(object):
@@ -14,16 +14,28 @@ class Policy(object):
         if len(actionList) == 0:
             return None
         actionProbDict = self.getActionsWithProb(state)
-        return max(actionList, key=lambda x: actionProbDict[x])
+        action = np.random.choice(actionList, 1, p=[actionProbDict[action] for action in actionList])[0]
+
+        return action
+        # return max(actionList, key=lambda x: actionProbDict[x])
 
     def getActionsWithProb(self, state):
         # {action: prob}
+        actionList = self.game.getPossibleActions(state)
+        if len(actionList) == 0:
+            return None
         actionProbDict = Counter()
         for basePolicy in self.policy:
             predictedAction = basePolicy.getAction(state)
-            actionProbDict[predictedAction] += self.policy[basePolicy]
-
+            if predictedAction in actionList:
+                actionProbDict[predictedAction] += self.policy[basePolicy]
+        self.normalizeProb(actionProbDict)
         return actionProbDict
+
+    def normalizeProb(self, actionProbDict):
+        total = sum(actionProbDict.values(), 0.0)
+        for key in actionProbDict:
+            actionProbDict[key] /= total
 
     def normalizePolicyWeight(self):
         total = sum(self.policy.values(), 0.0)
@@ -31,17 +43,6 @@ class Policy(object):
             self.policy[key] /= total
 
     def initalizedPolicy(self):
-        # X = []
-        # Y = [0, 1, 0, 1, 0, 1, 1, 0, 0, 1]
-        # for x in range(10):
-        #     state = self.game.getRestartState()
-        #     action = self.game.getPossibleActions(state)[0]
-        #     stateFeature = self.game.state2feature(state)
-        #     actionFeature = self.game.action2feature(action)
-        #     X.append(stateFeature+actionFeature)
-        # lin_clf = svm.LinearSVC()
-        # lin_clf.fit(X, Y)
-        # initialPolicy = BasePolicy(lin_clf, self.game)
         initialPolicy = InitalPolicy(self.game)
         self.policy[initialPolicy] = 1
 
