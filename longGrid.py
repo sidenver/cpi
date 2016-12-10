@@ -71,10 +71,14 @@ class LongGrid(Env):
         return state.isTerminal()
 
     def state2feature(self, state):
-        return state.getIndex()
+        feature = list()
+        feature.append(state.getIndex())
+        return feature
 
     def action2feature(self, action):
+        feature = list()
         if action == 'left':
-            return -1
+            feature.append(-1)
         elif action == 'right':
-            return 1
+            feature.append(1)
+        return feature
