@@ -10,7 +10,7 @@ if __name__ == '__main__':
     discount = 0.9  # discount factor
     iteration = 1000  # number of iteration of learning
     # TODO accuracy?
-    accuracy = 0.9  # accuracy
+    accuracy = 0.3  # accuracy
     sampleSize = 500  # number of sample's states
     horizon = 1000  # finite horizon
     greedyChooser = GreedyPolicy(env)
