@@ -45,12 +45,13 @@ if __name__ == '__main__':
     while k < iteration:
         estimate = advantageEstimator.estimateAdvantage(greedyChooser, policy, sampleSize, horizon)
         alpha = (estimate['advantage'] - (accuracy / 3.)) * (1 - discount) / 4.
-        policy.conservativeUpdate(estimate['newPolicy'], alpha)
-        k = k + 1
-        score = policyEvaluate(env, policy, discount, 100)
-        scoreList.append(score)
-        pickle.dump(scoreList, open('cpi.out', 'wb'))
-        print('Iteration {}: advantage {} , policy score {}'.format(str(k), str(estimate['advantage']), str(score)))
+        if alpha > 0 and alpha < 1:
+            policy.conservativeUpdate(estimate['newPolicy'], alpha)
+            k = k + 1
+            score = policyEvaluate(env, policy, discount, 100)
+            scoreList.append(score)
+            pickle.dump(scoreList, open('cpi.out', 'wb'))
+            print('Iteration {}: advantage {} , policy score {}'.format(str(k), str(estimate['advantage']), str(score)))
         # if estimate['advantage'] < (accuracy * 2. / 3.):
             # break
 
