@@ -48,7 +48,11 @@ class Policy(object):
 
     def conservativeUpdate(self, newPolicy, alpha=1.0):
         if alpha > 0 and alpha < 1:
-            self.policy[newPolicy] = alpha / (1 - alpha)
+            most_common = self.policy.most_common(20)
+            self.policy = Counter({policy: weight for policy, weight in most_common})
+            total = sum(self.policy.values(), 0.0)
+            print 'total after triming is:', total
+            self.policy[newPolicy] = alpha / (1 - alpha) * total
             self.normalizePolicyWeight()
         else:
             print 'bad alpha:', alpha
