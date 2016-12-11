@@ -25,7 +25,7 @@ class AdvantageEstimator():
         """
         return np.random.choice(actions, 1)[0]
 
-    def estimateQValue(self, policy, state, action, horizon=30):
+    def estimateQValue(self, policy, state, action, horizon):
         """
         Return a q-value
         Estimate q-value from a single roll out and reward of next state (state + action)
@@ -45,7 +45,7 @@ class AdvantageEstimator():
 
         return reward * (1 - self.discount)
 
-    def getSampledStateActionQ(self, policy, stateNum, cutOff):
+    def getSampledStateActionQ(self, policy, stateNum, cutOff, horizon):
         """
         Return a {s, a, q} set with size #stateNum
         Sample #stateNum triplets (state, action, q-value)
@@ -56,19 +56,19 @@ class AdvantageEstimator():
         for state in sampledStates:
             actions = self.game.getPossibleActions(state)
             action = self.getRandomAction(actions)
-            qValue = self.estimateQValue(policy, state, action)
+            qValue = self.estimateQValue(policy, state, action, horizon)
             stateActionQList.append((state, action, qValue))
 
         return stateActionQList
 
-    def estimateAdvantage(self, policyChooser, policy, stateNum, cutOff):
+    def estimateAdvantage(self, policyChooser, policy, stateNum, cutOff, horizon=1000):
         """
         Return a new policy and it's advantage
         Sample #stateNum states, get an action randomly for each state
         Calculate sampled q-value, then get a new policy
         Last, estimate the advantage
         """
-        sampledSet = self.getSampledStateActionQ(policy, stateNum, cutOff)
+        sampledSet = self.getSampledStateActionQ(policy, stateNum, cutOff, horizon)
         newPolicy = policyChooser.getGreedyPolicy(sampledSet)
         advantage = 0.0
         for sample in sampledSet:
