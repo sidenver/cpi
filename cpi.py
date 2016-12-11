@@ -18,7 +18,7 @@ def policyEvaluate(env, policy, discount, epoch=100.0):
         reward = 0.0
         while not state.isTerminal() and k < 500:
             action = policy.getAction(state)
-            nextState = env.getNextStateWithAction(state, action)
+            nextState = env.getNextStateWithActionNoNoise(state, action)
             reward += discountFactor * env.getReward(state, action, nextState)
             state = nextState
             discountFactor = discountFactor * discount
@@ -31,9 +31,9 @@ if __name__ == '__main__':
     env = LongGrid(10, 100, 0.1)
     dist = 0  # restart distribution
     discount = 0.9  # discount factor
-    iteration = 1000  # number of iteration of learning
+    iteration = 100  # number of iteration of learning
     # TODO accuracy?
-    accuracy = 0.3  # accuracy
+    accuracy = 0.1  # accuracy
     sampleSize = 100  # number of sample's states
     horizon = 500  # finite horizon
     greedyChooser = GreedyPolicy(env)
@@ -63,4 +63,3 @@ if __name__ == '__main__':
     # plt.show()
     plt.savefig('cpi.png')
     plt.show()
-    
