@@ -39,6 +39,16 @@ class LongGrid(Env):
     def getStartState(self):
         return self.stateList[0]
 
+    def getNextStateWithActionNoNoise(self, state, action):
+        index = state.getIndex()
+        if action == 'left':
+            index = index - 1
+        elif action == 'right':
+            index = index + 1 
+        if index < 0 or index >= self.width:
+            index = state.getIndex()
+        return self.stateList[index]
+
     def getNextStateWithAction(self, state, action):
         """
         Input current state and action
@@ -53,13 +63,7 @@ class LongGrid(Env):
                 action = 'left'
         elif invokeResult == 'stay':
             action = 'stay'
-        if action == 'left':
-            index = index - 1
-        elif action == 'right':
-            index = index + 1 
-        if index < 0 or index >= self.width:
-            index = state.getIndex()
-        return self.stateList[index]
+        return self.getNextStateWithActionNoNoise(state, action)
 
     def getPossibleActions(self, state):
         """
