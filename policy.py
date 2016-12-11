@@ -26,11 +26,17 @@ class Policy(object):
             return None
         actionProbDict = Counter()
         for basePolicy in self.policy:
-            predictedAction = basePolicy.getAction(state)
-            if predictedAction in actionList:
-                actionProbDict[predictedAction] += self.policy[basePolicy]
+            actionProb = basePolicy.getActionsWithProb(state)
+            actionProbDict.update(actionProb)
         self.normalizeProb(actionProbDict)
         return actionProbDict
+
+        # for basePolicy in self.policy:
+        #     predictedAction = basePolicy.getAction(state)
+        #     if predictedAction in actionList:
+        #         actionProbDict[predictedAction] += self.policy[basePolicy]
+        # self.normalizeProb(actionProbDict)
+        # return actionProbDict
 
     def normalizeProb(self, actionProbDict):
         total = sum(actionProbDict.values(), 0.0)
