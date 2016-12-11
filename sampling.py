@@ -16,7 +16,7 @@ class SamplingHandler():
     def acceptState(self):
         """
         Return true if the state is accepted
-        With prob. self.gamma return true
+        With prob. (1 - self.gamma) return true
         """
         return np.random.random() > self.gamma
 
