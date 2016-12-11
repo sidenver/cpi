@@ -33,6 +33,12 @@ class LongGrid(Env):
         # Terminal state
         self.stateList.append(State(width - 1, reward, True))
 
+    def getAllStates(self):
+        return self.stateList
+
+    def getStartState(self):
+        return self.stateList[0]
+
     def getNextStateWithAction(self, state, action):
         """
         Input current state and action
