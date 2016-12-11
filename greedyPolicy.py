@@ -41,7 +41,8 @@ class GreedyPolicy(object):
                     feature = stateFeature
                     X[action].append(feature)
                     Y[action].append(estimateAd)
-                regresserDict[action] = linear_model.LinearRegression()
+                # regresserDict[action] = linear_model.LinearRegression()
+                regresserDict[action] = linear_model.Ridge(alpha=.5)
                 regresserDict[action].fit(X[action], Y[action])
             greedyPolicy = BasePolicy(regresserDict, self.game)
         return greedyPolicy
