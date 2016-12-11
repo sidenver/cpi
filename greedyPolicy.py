@@ -43,6 +43,7 @@ class GreedyPolicy(object):
                     Y[action].append(estimateAd)
                 # regresserDict[action] = linear_model.LinearRegression()
                 regresserDict[action] = linear_model.Ridge(alpha=.5)
+                # regresserDict[action] = svm.SVR(C=1.0, epsilon=0.2)
                 regresserDict[action].fit(X[action], Y[action])
             greedyPolicy = BasePolicy(regresserDict, self.game)
         return greedyPolicy
