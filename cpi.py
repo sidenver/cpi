@@ -4,7 +4,7 @@ from advantage import AdvantageEstimator
 from policy import Policy
 from longGrid import LongGrid
 
-def policyEvaluate(env, policy, discount, epoch=100.0):
+def policyEvaluate(env, policy, discount, epoch=10.0):
     startState = env.getStartState()
     score = 0.0
     for i in range(epoch):
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         alpha = (estimate['advantage'] - (accuracy / 3.)) * (1 - discount) / 4.
         policy.conservativeUpdate(estimate['newPolicy'], alpha)
         k = k + 1
-        score = policyEvaluate(env, policy, discount, 100)
+        score = policyEvaluate(env, policy, discount, 10.0)
         scoreList.append(score)
         print('Iteration {}: advantage {} , policy score {}'.format(str(k), str(estimate['advantage']), str(score)))
         # if estimate['advantage'] < (accuracy * 2. / 3.):
