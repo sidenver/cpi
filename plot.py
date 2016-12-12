@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 import matplotlib
 import pickle
 
-deter = pickle.load(open('cpi_10_deter.out', "rb"))
-stoch = pickle.load(open('cpi_10_stoch.out', "rb"))
+deter = pickle.load(open('cpi_10_det.out', "rb"))
+stoch = pickle.load(open('cpi_10_sto.out', "rb"))
+average = pickle.load(open('cpi_10_stoch.out', 'rb'))
 
-df = pd.DataFrame({'CPI Deterministic': deter, 'CPI Stochatic': stoch})
+df = pd.DataFrame({'CPI Deterministic': deter, 'CPI Stochatic': stoch, 'CPI Average': average})
 
 matplotlib.style.use('ggplot')
 
@@ -18,7 +19,7 @@ ax.set(xlabel='Iteration',
         ylabel='Discounted Reward',
         title='deterministic vs. stochastic policy')
 # plt.show()
-plt.savefig('cpi_policy_.png')
+plt.savefig('cpi_policy_compare.png')
 
 # for idx, method in enumerate(clusterScore):
 #     df = pd.DataFrame(clusterScore[method])
