@@ -3,6 +3,7 @@ from greedyPolicy import GreedyPolicy
 from advantage import AdvantageEstimator
 from policy import Policy
 from longGrid import LongGrid
+from policyEvaluation import PolicyEvaluation
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
@@ -28,7 +29,7 @@ def policyEvaluate(env, policy, discount, epoch=100.0):
     return score / epoch
 
 if __name__ == '__main__':
-    env = LongGrid(20, 100, 0.1)
+    env = LongGrid(30, 100, 0.1)
     dist = 0  # restart distribution
     discount = 0.9  # discount factor
     iteration = 100  # number of iteration of learning
@@ -41,6 +42,7 @@ if __name__ == '__main__':
     policy = Policy(env)  # initalized here
     advantageEstimator = AdvantageEstimator(env, dist, discount)
     k = 0
+    policyEvaluator = PolicyEvaluation(env, discount)
     scoreList = list()
     while k < iteration:
         estimate = advantageEstimator.estimateAdvantage(greedyChooser, policy, sampleSize, horizon)
@@ -48,7 +50,8 @@ if __name__ == '__main__':
         if alpha > 0 and alpha < 1:
             policy.conservativeUpdate(estimate['newPolicy'], alpha)
             k = k + 1
-            score = policyEvaluate(env, policy, discount, 100)
+            # score = policyEvaluate(env, policy, discount, 100)
+            score = policyEvaluator.getScore(policy)
             scoreList.append(score)
             pickle.dump(scoreList, open('cpi.out', 'wb'))
             print('Iteration {}: advantage {} , policy score {}'.format(str(k), str(estimate['advantage']), str(score)))
