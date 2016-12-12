@@ -3,7 +3,7 @@ import numpy as np
 
 class PolicyEvaluation(object):
 
-    def __init__(self, env, discount = 0.9):
+    def __init__(self, env, discount=0.9):
         self.env = env
         self.discount = discount
 
@@ -15,11 +15,11 @@ class PolicyEvaluation(object):
             # For each state, perform a "full backup"
             oldV = np.copy(values)
             for state in stateList:
-                v = 0
-                # Look at the possible next actions
+                v = 0.0
                 if state.isTerminal():
                     values[state.getIndex()] = 0.0
-                    continue
+                    break
+                # Look at the possible next actions
                 actionProbDict = policy.getActionsWithProb(state)
                 for action in actionProbDict.keys():
                     actionProb = actionProbDict[action]

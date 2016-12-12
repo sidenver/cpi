@@ -42,10 +42,15 @@ class LongGrid(Env):
     def getNextStateListWithAction(self, state, action):
         index = state.getIndex()
         stateL = list()
+        if state.isTerminal():
+            return stateL
         if action == 'left':
             if index == 0:
                 stateL.append((self.stateList[index], 1 - self.noise / 2.))
                 stateL.append((self.stateList[index + 1], self.noise / 2.))
+            elif index == (self.width - 1):
+                stateL.append((self.stateList[index - 1], 1 - self.noise))
+                stateL.append((self.stateList[index], self.noise))
             else:
                 stateL.append((self.stateList[index - 1], 1 - self.noise))
                 stateL.append((self.stateList[index], self.noise / 2.))
@@ -54,6 +59,9 @@ class LongGrid(Env):
             if index == (self.width - 1):
                 stateL.append((self.stateList[index], 1 - self.noise / 2.))
                 stateL.append((self.stateList[index - 1], self.noise / 2.))
+            elif index == 0:
+                stateL.append((self.stateList[index], self.noise))
+                stateL.append((self.stateList[index + 1], 1 - self.noise))
             else:
                 stateL.append((self.stateList[index - 1], self.noise / 2.))
                 stateL.append((self.stateList[index], self.noise / 2.))

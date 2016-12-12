@@ -29,7 +29,7 @@ def policyEvaluate(env, policy, discount, epoch=100.0):
     return score / epoch
 
 if __name__ == '__main__':
-    env = LongGrid(20, 100, 0.0)
+    env = LongGrid(10, 100, 0.1)
     dist = 0  # restart distribution
     discount = 0.9  # discount factor
     iteration = 100  # number of iteration of learning
