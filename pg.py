@@ -4,10 +4,11 @@ from longGrid import LongGrid
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
+import pickle
 
 np.random.seed(0)
 
-env = LongGrid(25, 100, 0.1)
+env = LongGrid(30, 100, 0.1)
 # outdir = sys.argv[1]
 
 input_layer_size = env.width
@@ -135,6 +136,7 @@ def main():
         # print 'gradient_estimate_magnitude', np.sqrt((gradient_estimate ** 2).sum())
         model += gradient_step_size * gradient_estimate
 
+    pickle.dump(rewards, open('pg30.out', 'wb'))
     matplotlib.style.use('ggplot')
 
     plt.plot()
