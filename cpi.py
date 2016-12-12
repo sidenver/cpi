@@ -29,13 +29,13 @@ def policyEvaluate(env, policy, discount, epoch=100.0):
     return score / epoch
 
 if __name__ == '__main__':
-    env = LongGrid(30, 100, 0.1)
+    env = LongGrid(10, 100, 0.1)
     dist = 0  # restart distribution
     discount = 0.9  # discount factor
     iteration = 100  # number of iteration of learning
     # TODO accuracy?
     accuracy = 0.1  # accuracy
-    sampleSize = 400  # number of sample's states
+    sampleSize = 100  # number of sample's states
     horizon = 500  # finite horizon
     greedyChooser = GreedyPolicy(env)
     # TODO initalize policy

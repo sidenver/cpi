@@ -10,7 +10,9 @@ class PolicyEvaluation(object):
     def getScore(self, policy, theta=0.00001):
         stateList = self.env.getAllStates()
         values = np.zeros(len(stateList))
-        while True:
+        iteration = 0
+        while True and iteration < 1000:
+            iteration += 1
             delta = 0
             # For each state, perform a "full backup"
             oldV = np.copy(values)
