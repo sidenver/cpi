@@ -19,6 +19,12 @@ class Policy(object):
         return action
         # return max(actionList, key=lambda x: actionProbDict[x])
 
+    def times(self, actionProb, weight):
+        newActionProb = Counter()
+        for action in actionProb:
+            newActionProb[action] = actionProb[action] / weight
+        return newActionProb
+
     def getActionsWithProb(self, state):
         # {action: prob}
         actionList = self.game.getPossibleActions(state)
@@ -27,7 +33,8 @@ class Policy(object):
         actionProbDict = Counter()
         for basePolicy in self.policy:
             actionProb = basePolicy.getActionsWithProb(state)
-            actionProbDict.update(actionProb)
+            weightActionProb = self.times(actionProb, self.policy[basePolicy])
+            actionProbDict.update(weightActionProb)
         self.normalizeProb(actionProbDict)
         return actionProbDict
 
