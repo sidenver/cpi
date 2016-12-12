@@ -6,7 +6,7 @@ class PolicyEvaluation(object):
     def __init__(self, env, discount = 0.9):
         self.env = env
         self.discount = discount
-        
+
     def getScore(self, policy, theta=0.00001):
         stateList = self.env.getAllStates()
         values = np.zeros(len(stateList))
@@ -17,6 +17,9 @@ class PolicyEvaluation(object):
             for state in stateList:
                 v = 0
                 # Look at the possible next actions
+                if state.isTerminal():
+                    values[state.getIndex()] = state.getReward()
+                    continue
                 actionProbDict = policy.getActionsWithProb(state)
                 for action in actionProbDict.keys():
                     actionProb = actionProbDict[action]

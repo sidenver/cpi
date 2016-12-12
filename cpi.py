@@ -3,7 +3,7 @@ from greedyPolicy import GreedyPolicy
 from advantage import AdvantageEstimator
 from policy import Policy
 from longGrid import LongGrid
-from policyEvaluate import PolicyEvaluation
+from policyEvaluation import PolicyEvaluation
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
