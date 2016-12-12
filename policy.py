@@ -22,7 +22,7 @@ class Policy(object):
     def times(self, actionProb, weight):
         newActionProb = Counter()
         for action in actionProb:
-            newActionProb[action] = actionProb[action] / weight
+            newActionProb[action] = actionProb[action] * weight
         return newActionProb
 
     def getActionsWithProb(self, state):
