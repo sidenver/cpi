@@ -18,7 +18,7 @@ class PolicyEvaluation(object):
                 v = 0
                 # Look at the possible next actions
                 if state.isTerminal():
-                    values[state.getIndex()] = 0
+                    values[state.getIndex()] = 0.0
                     continue
                 actionProbDict = policy.getActionsWithProb(state)
                 for action in actionProbDict.keys():
